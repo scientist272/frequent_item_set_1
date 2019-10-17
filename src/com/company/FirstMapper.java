@@ -7,7 +7,9 @@ public class FirstMapper {
     private static final BlockingDeque[] buffer = Transfer.buffer;
 
     public void map(ArrayList[] buckets, int threshold) {
+        //用四个线程，将数据分成四块，每个线程处理一块数据
         final int tasks = 4;
+        //线程池，用于管理线程
         ExecutorService executorService = Executors.newCachedThreadPool();
         final CountDownLatch countDownLatch = new CountDownLatch(tasks);
         for (int i = 0; i < tasks; i++) {
@@ -85,7 +87,7 @@ public class FirstMapper {
         return keyValues;
     }
 
-    //用于生成下一步的候选的set
+    //由当前的frequent item set生成下一步的候选的set
     private List<Set<String>> generateCandidateSet(Map<Set<String>,Integer> keyValues){
         List<Set<String>> candidateSet = new CopyOnWriteArrayList<>();
         List<Set<String>> resultSet = new CopyOnWriteArrayList<>();

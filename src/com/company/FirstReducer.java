@@ -12,6 +12,7 @@ public class FirstReducer {
     private static final List<Set<String>> reduceResult = new CopyOnWriteArrayList<>();
 
     public List<Set<String>> reduce() {
+        //四个线程，从缓冲去中读取mapper的生产结果，reduce后作为第一层reducer的结果
         int tasks = 4;
         CountDownLatch countDownLatch = new CountDownLatch(tasks);
         Lock lock = new ReentrantLock();
